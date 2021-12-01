@@ -38,9 +38,11 @@ def y_hat(x, g):
 
 def plot_linear_regression(x, y, a, b, g):
     plt.ioff()
+    plt.figure()
     plt.scatter(x, y)
     plt.plot(a, b, color='r')
     plt.plot(a, y_hat(a, g), color='b')
+    plt.fill_between(a, y_hat(a, g)+0.2, y_hat(a, g)-0.2, alpha=0.1, color='b')
     plt.title(f'The order of polynomial is : {g.m-1}')
     plt.legend(['original funciton', 'fitted funciton', 'data_with_noise'])
     plt.show()
@@ -50,6 +52,7 @@ class animation_regression():
     def __init__(self, x, y, a, b, g):
         self.a = a
         self.g = g
+        plt.figure()
         plt.ion()
         self.ax = plt.gca()
         self.ax.scatter(x, y)
@@ -107,5 +110,7 @@ if __name__ == "__main__":
     print('The final parameters:')
     print(g.w)
     print(f'final loss is : {loss(y, y_hat(x,g))}')
+    plt.close()
+    # plt.show()
 
     plot_linear_regression(x, y, x_original, y_original, g)
