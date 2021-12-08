@@ -107,26 +107,45 @@ if __name__ == "__main__":
     x, y = np.load(data_file)
     x_original, y_original = synthetic_data(0, 1, 50, noisy=False)
 
-    # ani = animation_regression(x, y, x_original, y_original, g)
+    ani = animation_regression(x, y, x_original, y_original, g)
 
-    image = st.empty()
+    progress_bar =  st.sidebar.progress(0)
+    progress_text = st.sidebar.empty()
+
+
+    begin_text =  st.empty()
+    display_fit = st.empty()
+    end_text =  st.empty()
+
 
     print('The initial parameters:')
     print(g.w)
     print(f'initial loss is: {loss(y, y_hat(x,g))}')
+
+    # print(f'''
+    #     The initial parameters:
+    #     {g.w}
+    #     initial loss is: {loss(y, y_hat(x,g))} ''')
+
+    begin_text.text(f'''
+        The initial parameters:
+        {g.w}
+        initial loss is: {loss(y, y_hat(x,g))} ''')
 
     # st.pyplot(ani.fig)
     for i in range(200000):
         update_g_w(x, y, g, 0.01)
         if i % 1000 == 0:
             print(f'epoch is : {i} , loss is : {loss(y, y_hat(x,g))}')
-            # ani.update_g(g)
-            fig = plt.figure()
-            plot_linear_regression(x, y, x_original, y_original, g)
-            # st.image(fig2img(fig))
-            image.image(fig2img(fig))
-            plt.pause(0.1)
-            plt.close()
+            progress_bar.progress(i/200000)
+            progress_text.text(f'progress ...  {i/2000} / 100')
+            ani.update_g(g)
+            display_fit.pyplot(ani.fig)
+            # plt.pause(0.1)
+            # display.clear_output(wait=True)
+
+    progress_bar.progress(0.999999)
+    progress_text.text(f'progress ...  100 / 100')
 
 
     # analytical_solution_w(x, y, g)
@@ -134,6 +153,12 @@ if __name__ == "__main__":
     print('The final parameters:')
     print(g.w)
     print(f'final loss is : {loss(y, y_hat(x,g))}')
+
+    end_text.text(f'''
+        The final parameters:
+        {g.w}
+        final loss is: {loss(y, y_hat(x,g))} ''')
+
     # plt.close()
     # plt.show()
 
