@@ -109,12 +109,16 @@ if __name__ == "__main__":
 
     ani = animation_regression(x, y, x_original, y_original, g)
 
-    progress_bar =  st.sidebar.progress(0)
-    progress_text = st.sidebar.empty()
+    # progress_bar =  st.sidebar.progress(0)
+    # progress_text = st.sidebar.empty()
 
 
     begin_text =  st.empty()
     display_fit = st.empty()
+
+    progress_text = st.empty()
+    progress_bar =  st.progress(0)
+
     end_text =  st.empty()
 
 
