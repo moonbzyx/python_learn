@@ -81,6 +81,6 @@ if __name__ == '__main__':
             display_loss.pyplot(fig)
             plt.pause(0.2)
     pred = np.mat([0 if net(X,Y)[:,i]<0.5 else 1 for i in range(4)]) 
-    "The input data for xor X is :\n", [X]
+    "The input data for xor X is :\n", [X[i] for i in range(2)]
     "The results Y is :\n", [Y]
     "The Prediction of the MLP net is : \n", [pred]
